@@ -73,6 +73,7 @@ prep_gg <- function(umap_list, color_by){
     last <- df_list[[1]]
     last$Iteration <- n + 1L
     df_list[[n + 1]] <- last
+
     return(do.call(rbind, df_list))
 }
 
@@ -81,7 +82,8 @@ plot_gg <- function(df){
     p <- ggplot2::ggplot(df, ggplot2::aes(x = UMAP_1, y = UMAP_2, color = Color)) +
         ggplot2::geom_point() +
         gganimate::transition_time(Iteration) +
-        gganimate::ease_aes("linear")
+        gganimate::ease_aes("linear") +
+        ggplot2::coord_equal()
     return(p)
 }
 
@@ -97,6 +99,8 @@ pr <- prep_gg(o, sample_meta$Q_African)
 p <- plot_gg(pr) + labs(color = "African ancestry")
 
 p
+
+gganimate::anim_save("popstruct_animated.gif")
 
 library(ggplot2)
 
@@ -115,3 +119,18 @@ ggplot(sample_meta, aes(x = u[[3]][,1], y = u[[3]][,2],
 ggplot(sample_meta, aes(x = r[[3]][,1], y = r[[3]][,2],
                         color = PC1)) +
     geom_point()
+
+# Test on PBMC dataset
+
+load("data/pbmc_pca.RData")
+
+u <- make_umaps(pbmc_pca[,1:10])
+r <- rotate_umaps(u)
+o <- order_umaps(r)
+pr <- prep_gg(o, pbmc_clust)
+
+p <- plot_gg(pr) + labs(color = "Cluster")
+
+p
+
+gganimate::anim_save("pmbc_animated.gif")
