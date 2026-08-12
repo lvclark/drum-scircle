@@ -70,6 +70,9 @@ prep_gg <- function(umap_list, color_by){
             df_list[[i]]$Sample <- rownames(umap_list[[i]])
         }
     }
+    last <- df_list[[1]]
+    last$Iteration <- n + 1L
+    df_list[[n + 1]] <- last
     return(do.call(rbind, df_list))
 }
 
