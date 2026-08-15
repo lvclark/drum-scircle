@@ -1,0 +1,20 @@
+Package: DrumSCircle
+Version: 0.1
+Date: 2026-08-15
+Title: Animate across possible UMAP plots
+Authors@R: person(given = "Lindsay", middle = "Virginia", family = "Clark",
+                  role = c("aut", "cre"),
+                  email = "Lindsay.Clark@seattlechildrens.org")
+Author: Lindsay V. Clark [aut, cre]
+Maintainer: Lindsay V. Clark <Lindsay.Clark@seattlechildrens.org>
+Imports: umap, ggplot2, pracma, gganimate
+Description: Both an art project and a reminder not to overinterpret our UMAP
+  plots. Starting from a matrix of PCA coordinates or other data, multiple
+  (ten by default) UMAP projections are generated, rotated to align to each
+  other, and ordered by their similarity. An animation, exportable as a GIF, is
+  then generated showing the observations (i.e. rows of the input matrix; cells
+  if you are analyzing single cell data) moving around from projection to
+  projection. Named for the eclectic dancing that one might see at a drum
+  circle.
+License: GPL (>= 2)
+URL: https://github.com/lvclark/drum-scircle
