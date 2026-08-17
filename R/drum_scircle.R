@@ -52,6 +52,14 @@ order_umaps <- function(umap_list){
     return(umap_list[path])
 }
 
+# Wrapper for the above three
+prep_umaps <- function(x, n = 10L, seeds = seq_len(n)){
+    u <- make_umaps(x, n, seeds)
+    r <- rotate_umaps(u)
+    o <- order_umaps(r)
+    return(o)
+}
+
 # Build long-format data frame for ggplot
 prep_gg <- function(umap_list, color_by){
     n <- length(umap_list)
@@ -87,16 +95,21 @@ plot_gg <- function(df){
     return(p)
 }
 
+# Wrapper for the above two
+animate_umaps <- function(umap_list, color_by){
+    pr <- prep_gg(umap_list, color_by)
+    p <- plot_gg(pr)
+    return(p)
+}
+
 # Testing
 sample_meta <- read.csv("../../SIDS/ramirez_2025-12_downstream/popstruct/sample_metadata_2025-12-16.csv")
 x <- as.matrix(sample_meta[,c("PC1", "PC2", "PC3")])
 
-u <- make_umaps(x)
-r <- rotate_umaps(u)
-o <- order_umaps(r)
-pr <- prep_gg(o, sample_meta$Q_African)
+o <- prep_umaps(x)
+p <- animate_umaps(o, sample_meta$Q_African)
 
-p <- plot_gg(pr) + labs(color = "African ancestry")
+p + labs(color = "African ancestry")
 
 p
 
@@ -124,12 +137,8 @@ ggplot(sample_meta, aes(x = r[[3]][,1], y = r[[3]][,2],
 
 load("data/pbmc_pca.RData")
 
-u <- make_umaps(pbmc_pca[,1:10])
-r <- rotate_umaps(u)
-o <- order_umaps(r)
-pr <- prep_gg(o, pbmc_clust)
-
-p <- plot_gg(pr) + labs(color = "Cluster")
+o <- prep_umaps(pbmc_pca[,1:10])
+p <- animate_umaps(o, pbmc_clust) + labs(color = "Cluster")
 
 p
 
