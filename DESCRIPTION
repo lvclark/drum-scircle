@@ -18,3 +18,4 @@ Description: Both an art project and a reminder not to overinterpret our UMAP
   circle.
 License: GPL (>= 2)
 URL: https://github.com/lvclark/drum-scircle
+VignetteBuilder: quarto

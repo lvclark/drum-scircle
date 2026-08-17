@@ -1,0 +1,28 @@
+---
+title: "Using DrumSCircle"
+format: html
+author: "Lindsay V. Clark"
+vignette: >
+  %\VignetteIndexEntry{Using DrumSCircle}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+# Test on PBMC dataset
+library(DrumSCircle)
+library(gganimate)
+
+load("data/pbmc_pca.RData")
+
+o <- prep_umaps(pbmc_pca[,1:10])
+p <- animate_umaps(o, pbmc_clust) + labs(color = "Cluster")
+
+p
+```
+
+```{r}
+#| eval: false
+gganimate::anim_save("pmbc_animated.gif")
+```
+
